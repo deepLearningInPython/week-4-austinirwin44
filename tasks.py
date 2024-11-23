@@ -103,7 +103,7 @@ def token_counts(string: str, k: int = 1) -> dict:
     #strip punctuation, change to lowercase, and split the string
     tokens = [token.strip(punctuation_remove).lower() for token in string.split()]
     #create a dictionary containing the tokens and their counts
-    word_frequencies = {token: tokens.count(token) for token in set(tokens) if tokens.count(token) >= k}
+    word_frequencies = {token: tokens.count(token) for token in set(tokens) if tokens.count(token) > k}
     return word_frequencies
 
 
