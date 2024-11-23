@@ -1,4 +1,5 @@
 import numpy as np
+import pytest
 
 # Follow the tasks below to practice basic Python concepts.
 # Write your code in between the dashed lines.
@@ -29,7 +30,8 @@ import numpy as np
 text = "The quick brown fox jumps over the lazy dog!"
 
 # Write a list comprehension to tokenize the text and remove punctuation
-tokens = _ # Your code here
+punctuation_remove = ",.!?:;"
+tokens = [token.strip(punctuation_remove).lower() for token in text.split()]
 
 # Expected output: ['The', 'quick', 'brown', 'fox', 'jumps', 'over', 'the', 'lazy', 'dog']
 print(tokens)
@@ -44,9 +46,14 @@ print(tokens)
 
 # Your code here:
 # -----------------------------------------------
-def tokenize(string: str) -> list:
-    pass # Your code
 
+def tokenize(string: str) -> list:
+    punctuation_remove = ",.!?:;"
+    #strip punctuation, change to lowercase, and split the string
+    tokens = [token.strip(punctuation_remove).lower() for token in string.split()]
+    #create a set and sort the words alphabetically
+    unique_tokens = sorted(set(tokens))
+    return unique_tokens
 
 # -----------------------------------------------
 
@@ -74,7 +81,9 @@ def tokenize(string: str) -> list:
 
 # Your code here:
 # -----------------------------------------------
-word_frequencies = _ # Your code here
+unique_tokens = sorted(set(tokens))
+word_frequencies = {token: tokens.count(token) for token in set(unique_tokens)}
+
 
 # Expected output example: {'the': 2, 'quick': 1, ...}
 print(word_frequencies)
@@ -90,7 +99,13 @@ print(word_frequencies)
 # Your code here:
 # -----------------------------------------------
 def token_counts(string: str, k: int = 1) -> dict:
-    pass # Your code
+    punctuation_remove = ",.!?:;"
+    #strip punctuation, change to lowercase, and split the string
+    tokens = [token.strip(punctuation_remove).lower() for token in string.split()]
+    #create a dictionary containing the tokens and their counts
+    word_frequencies = {token: tokens.count(token) for token in set(tokens) if tokens.count(token) >= k}
+    return word_frequencies
+
 
 # test:
 text_hist = {'the': 2, 'quick': 1, 'brown': 1, 'fox': 1, 'jumps': 1, 'over': 1, 'lazy': 1, 'dog': 1}
@@ -310,7 +325,7 @@ o.shape == (100,) and o.mean().round(3) == 16.287 and o.std().astype(int) == 133
 
 # Your code here:
 # -----------------------------------------------
-def rnn_loss(w: np.array, w, list_of_sequences: list[np.array], y: np.array) -> np.float64:
+def rnn_loss(w: np.array, list_of_sequences: list[np.array], y: np.array) -> np.float64:
     pass # Your code
 
 # Test:
