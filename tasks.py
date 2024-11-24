@@ -185,7 +185,7 @@ def make_vocabulary_map(documents: list) -> tuple:
 
 # Test
 t2i, i2t = make_vocabulary_map([text])
-all(i2t[t2i[token]] == token for token in t2i) # should be True
+all(i2t[t2i[tok]] == tok for tok in t2i) # should be True
 # -----------------------------------------------
 
 
@@ -200,6 +200,27 @@ all(i2t[t2i[token]] == token for token in t2i) # should be True
 # Your code here:
 # -----------------------------------------------
 def tokenize_and_encode(documents: list) -> list:
+    #step 1: tokenize all documents
+    all_tokens = []
+    for doc in documents:
+        all_tokens.extend(tokenize(doc))
+    
+    #step 2: create token_to_id
+    unique_tokens = sorted(set(all_tokens))
+    t2i = {token: idx for idx, token in enumerate(unique_tokens)}
+
+    #step 3: create id_to_token
+    i2t = {idx: token for token, idx in t2i.items()}
+
+    #step 4: encode each document
+    encoded_sentences = []
+    for doc in documents:
+        tokens = tokenize(doc)
+        encoded_sentence = [t2i[token] for token in tokens if token in t2i]
+        encoded_sentences.append(encoded_sentence)
+    
+    return encoded_sentences, t2i, i2t
+
 
 # Test:
 enc, t2i, i2t = tokenize_and_encode([text, 'What a luck we had today!'])
